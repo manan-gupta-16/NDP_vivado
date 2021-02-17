@@ -17,9 +17,6 @@ reg [63:0] counter_checksum;
 reg [63:0] length_traversed;
 reg end_of_length;
 
-assign lo32 = csum[31:0];
-assign hi32 = csum[63:32];
-
 always @(posedge clk) begin
     if(~rst) begin
         toggle_checksum <= 0;
@@ -56,12 +53,12 @@ end
 
 always @ (posedge clk) begin
     if(end_of_length) begin
-        lo32 <= lo32 + addr[31:0][8*length_traversed +: 8];
-        hi32 <= hi32 + lo32 + addr[31:0][8*length_traversed +: 8];     
+        lo32 <= lo32 + addr[31:0][(8*length_traversed) +: 8];
+        hi32 <= hi32 + lo32 + addr[31:0][(8*length_traversed) +: 8];     
     end
     else if(~rst) begin
-        lo32 <= 0;
-        hi32 <= 0;
+        lo32 <= csum[31:0];
+        hi32 <= csum[63:32];
     end
     else if(~end_of_length) begin
         seq <= hi32 << 32 | lo32;     
