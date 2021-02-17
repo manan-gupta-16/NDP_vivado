@@ -1,0 +1,10 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/manan/vivado/fletcher64_checksum/fletcher64_checksum.srcs/sources_1/new/fletcher64_checksum.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fletcher64_checksum
+ERROR: [VRFC 10-1243] port addr must not be declared to be an array [/home/manan/vivado/fletcher64_checksum/fletcher64_checksum.srcs/sources_1/new/fletcher64_checksum.v:7]
+ERROR: [VRFC 10-529] concurrent assignment to a non-net lo32 is not permitted [/home/manan/vivado/fletcher64_checksum/fletcher64_checksum.srcs/sources_1/new/fletcher64_checksum.v:20]
+ERROR: [VRFC 10-529] concurrent assignment to a non-net hi32 is not permitted [/home/manan/vivado/fletcher64_checksum/fletcher64_checksum.srcs/sources_1/new/fletcher64_checksum.v:21]
+ERROR: [VRFC 10-1304] range is not allowed in a prefix [/home/manan/vivado/fletcher64_checksum/fletcher64_checksum.srcs/sources_1/new/fletcher64_checksum.v:59]
+ERROR: [VRFC 10-845] illegal operand for operator + [/home/manan/vivado/fletcher64_checksum/fletcher64_checksum.srcs/sources_1/new/fletcher64_checksum.v:59]
+ERROR: [VRFC 10-1304] range is not allowed in a prefix [/home/manan/vivado/fletcher64_checksum/fletcher64_checksum.srcs/sources_1/new/fletcher64_checksum.v:60]
+ERROR: [VRFC 10-845] illegal operand for operator + [/home/manan/vivado/fletcher64_checksum/fletcher64_checksum.srcs/sources_1/new/fletcher64_checksum.v:60]
+ERROR: [VRFC 10-2787] module fletcher64_checksum ignored due to previous errors [/home/manan/vivado/fletcher64_checksum/fletcher64_checksum.srcs/sources_1/new/fletcher64_checksum.v:3]
