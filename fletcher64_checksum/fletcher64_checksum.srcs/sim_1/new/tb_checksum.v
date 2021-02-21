@@ -2,13 +2,12 @@
 
 module tb_checksum;
 
-reg clk, rst, en;
-reg [63:0] addr[63:0];
-reg [63:0] len;
+reg clk, rst, valid;
+reg [63:0] data;
 reg [63:0] csum;
 wire [63:0] seq;
 
-fletcher64_checksum uut(clk, rst, en, addr, len, csum, seq);
+fletcher64_checksum uut(clk, rst, valid, data, csum, seq);
 
 initial begin
 clk = 0;
@@ -17,12 +16,11 @@ end
 
 initial begin
 rst = 0;
-en = 0;
+valid = 0;
 #15 
 rst = 1;
-en = 1;
-addr = {32'd163, 32'd200, 32'd19, 32'd74, 32'd88};
-len = 64'd5;
+valid = 1;
+data = 64'd163;
 csum = 0;
 #60
 $finish;
