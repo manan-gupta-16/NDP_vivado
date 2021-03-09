@@ -29,12 +29,27 @@ rst = 1;
 valid = 0;
 address = 64'd123;
 size = 64'd3;
-#40
+#50
 rst = 1;
 valid = 1;
-address = 64'd124;
+address = 64'd127;
 size = 64'd4;
-#40
+#10
+rst = 1;
+valid = 0;
+address = 64'd127;
+size = 64'd4;
+#50
+rst = 1;
+valid = 1;
+address = 64'd131;
+size = 64'd9;
+#10
+rst = 1;
+valid = 0;
+address = 64'd131;
+size = 64'd9;
+#50
 $finish;
 end
 

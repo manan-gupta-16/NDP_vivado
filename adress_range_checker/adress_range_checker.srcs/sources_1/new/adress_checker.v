@@ -18,15 +18,17 @@ reg [3:0] count;
 reg decision;
 
 wire [63:0] end_address;
+wire [3:0] count_wire;
 
-assign end_address = address + size;
+assign count_wire = count;
+assign end_address = address + size - 1'b1;
 
 always @ (posedge clk) begin
     if(~rst) begin
         dependency <= 0;
     end
     else if(valid) begin
-        case (count)
+        case (count_wire)
             2'b00:  dependency <= 0; 
             2'b01:  begin
                         if(decision) dependency <= 0;
@@ -50,28 +52,28 @@ always @ (posedge clk) begin
     end 
         count <= 0;
     end
-    else if(valid & count != 2'b11) begin
+    else if(valid & count_wire != 2'b11) begin
             count <= count + 1'b1;
-            case (count)
+            case (count_wire)
                 2'b00:  begin 
                             address_buffer[0] <= address;
                             size_buffer[0] <= size;
-                            end_address_buffer[0] <= address + size;
+                            end_address_buffer[0] <= address + size - 1'b1;
                         end
                 2'b01:  begin 
                                 address_buffer[1] <= address;
                                 size_buffer[1] <= size;
-                                end_address_buffer[1] <= address + size;
+                                end_address_buffer[1] <= address + size - 1'b1;
                          end                    
                  2'b10:  begin 
                                  address_buffer[2] <= address;
                                  size_buffer[2] <= size;
-                                 end_address_buffer[2] <= address + size;
+                                 end_address_buffer[2] <= address + size - 1'b1;
                          end
                  /*2'b11:  begin 
                                   address_buffer[3] <= address;
                                   size_buffer[3] <= size;
-                                  end_address_buffer[3] <= address + size;
+                                  end_address_buffer[3] <= address + size - 1'b1;
                          end*/
             endcase             
     end
@@ -79,22 +81,27 @@ end
 
 always @(valid) begin
     if(valid) begin
-        case (count)
+        case (count_wire)
             2'b00: begin
                         decision = 1;    //decision <- 1 implies no dependency
                    end
             2'b01: begin
-                         if((address <= address_buffer[0] & end_address >= address_buffer[0]) | (address <= end_address_buffer[0] & end_address >= address_buffer[0]))
+                         if((address <= address_buffer[0] & end_address >= address_buffer[0]) | 
+                         (address <= end_address_buffer[0] & end_address >= address_buffer[0]))
                             decision = 0;
                          else decision = 1;
                    end
             2'b01: begin
-                         if((end_address < address_buffer[0] & end_address < address_buffer[1]) | (address > end_address_buffer[0] & end_address < address_buffer[1]) | (address > end_address_buffer[1] & end_address < address_buffer[0]) | (address > end_address_buffer[0] & address > end_address_buffer[1]))
+                         if((end_address < address_buffer[0] & end_address < address_buffer[1]) | 
+                         (address > end_address_buffer[0] & end_address < address_buffer[1]) | 
+                         (address > end_address_buffer[1] & end_address < address_buffer[0]) | 
+                         (address > end_address_buffer[0] & address > end_address_buffer[1]))
                             decision = 1;
                          else decision = 0; 
                    end 
             2'b10: begin
-                         if((end_address < address_buffer[0] & end_address < address_buffer[1] & end_address < address_buffer[2]) | (address > end_address_buffer[0] & address > end_address_buffer[1] & address > end_address_buffer[2]))
+                         if((end_address < address_buffer[0] & end_address < address_buffer[1] & end_address < address_buffer[2]) | 
+                         (address > end_address_buffer[0] & address > end_address_buffer[1] & address > end_address_buffer[2]))
                             decision = 1;
                          else decision = 0;
                    end  
